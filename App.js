@@ -1,12 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,10 +17,20 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import axios from 'axios';
+
 const App: () => React$Node = () => {
 
   const [counter, setCounter] = useState(0);
   const [name, setName] = useState('Swastik');
+
+  useEffect(()=>{axios
+    .get("http://api.openweathermap.org/data/2.5/weather?q=London&appId=293a0ddf7702211b1d931aa932e2848e")
+    .then((response)=>{console.log(response)});
+
+}, []);
+  //api.openweathermap.org/data/2.5/weather?q=London&appId=293a0ddf7702211b1d931aa932e2848e
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -42,39 +44,14 @@ const App: () => React$Node = () => {
               <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
           )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
+          
             <View>
           <Text>{counter} - {name}</Text>
             <Button onPress={()=>setCounter(counter +1)} title="Counter">Counter</Button>
             </View>
           
-            <LearnMoreLinks />
-          </View>
+            
+          
         </ScrollView>
       </SafeAreaView>
     </>
