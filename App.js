@@ -23,10 +23,11 @@ const App: () => React$Node = () => {
 
   const [counter, setCounter] = useState(0);
   const [name, setName] = useState('Swastik');
+  const [temperature, setTemperature] = useState(0);
 
   useEffect(()=>{axios
     .get("http://api.openweathermap.org/data/2.5/weather?q=London&appId=293a0ddf7702211b1d931aa932e2848e")
-    .then((response)=>{console.log(response)});
+    .then((response)=>{setTemperature(parseInt(response.data.main.temp)-273)});
 
 }, []);
   //api.openweathermap.org/data/2.5/weather?q=London&appId=293a0ddf7702211b1d931aa932e2848e
@@ -38,15 +39,10 @@ const App: () => React$Node = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
+          
           
             <View>
-          <Text>{counter} - {name}</Text>
+          <Text>{counter} - {name} - {temperature}</Text>
             <Button onPress={()=>setCounter(counter +1)} title="Counter">Counter</Button>
             </View>
           
